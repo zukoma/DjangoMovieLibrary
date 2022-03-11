@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script type="text/javascript" src="{% static 'script.js' %}" defer></script>
+    <title>Movie Database</title>
+</head>
+<body>
+    <div id="header">
+        <p>VCA Movie Database<p>
+        <button id="new-movie-button" type="button" onclick="openForm()">Add Movie</button>
+        {% if user.is_authenticated %}
+            <p1>Authenticated as: {{request.user.username}}<br><a href="{% url 'logout' %}">Logout</a></p1>
+        {% else %}
+            <p1>You are not logged in.<br><a href="{% url 'login' %}">Login</a></p1>
+        {% endif %}
+    </div>
+
+    <div id="form-popup">
+        <div id="form">
+            <label for="title">Movie Title</label>
+            <input type="text" id="title" name="title" required>
+            <label for="year">Release Year</label>
+            <input type="text" id="year" name="year" required>
+            <label for="rating">My rating</label>
+            <input type="number" id="rating" name="rating" required>
+            <label for="notes">Notes</label>
+            <input type="text" id="notes" name="notes" required>
+            <button onClick="addMovie()">Submit</button>
+            <button type="button" id="close" onclick="closeForm()">Close</button>
+        </div>
+    </div>
+
+    <div id="content">
+            {% for item in all_movies %}
+                <div class="movie">
+                    Title: <span class="div-title">{{ item.title}}</span>
+                    Year: <span class="div-year">{{ item.year}}</span>
+                    Rating: <span class="div-rating">{{ item.rating}}</span><br>
+                    Notes: <span class="div-notes">{{ item.notes}}</span><br>
+                    Added: <span class="div-added_at">{{ item.added_at}}</span><br>
+                    <button id="{{ item.id }}" onClick="editItem(this.id)">Edit</button>
+                    <button id="{{ item.id }}" onClick="deleteItem(this.id)">Delete</button>
+                </div>
+            {% endfor %}
+    </div>
+    <div class= "overlay" id="overlay"></div>
+</body>
+</html>

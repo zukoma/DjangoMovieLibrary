@@ -1,0 +1,94 @@
+html{
+    padding: 20px;
+}
+#header{
+    display:flex;
+    justify-content: center;
+    background-color: #F8F9FA;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 8px;
+    margin: 10px;
+    margin-bottom:20px;
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+#header p1{
+    font-size: 15px;
+    color: gray;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}
+
+#form-container div {
+    display:inline-block;
+}
+#submit-button{
+    margin: 30px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+.movie{
+    text-align: center;
+    background-color: #F8F9FA;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 6px;
+    margin: 10px;
+    display: block;
+}
+
+#login-form{
+    text-align: center;
+    background-color: #F8F9FA;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 6px;
+    margin: 10px;
+}
+
+/* Form Popup stuff */
+
+#form-popup{
+    background-color: #F8F9FA;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 30px;
+    font-size: 20px;
+    position:fixed;
+    top: 50vh;
+    left: 50vw;
+    z-index: 1;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.3s ease-in-out;
+}
+
+#form{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#form input {
+    width: 300px;
+}
+
+
+#form button{
+    margin: 10px;
+
+}
+
+#form-popup.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+.overlay.active{
+      display: block;
+  }
