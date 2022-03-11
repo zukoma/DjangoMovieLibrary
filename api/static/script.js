@@ -25,8 +25,8 @@ function deleteItem(clicked_id){
     headers: {
         'X-CSRFToken': csrftoken,
       },
-  });
-  window.location.reload();
+  }, 3000);
+    setTimeout(function(){location.reload()}, 10);
   }
 
 
@@ -49,9 +49,9 @@ function addMovie(clicked_id) {
           "rating": rating.value,
           "notes": notes.value
       }),
-  }, 500),
+  }),
   closeForm();
-  document.location.reload();
+  setTimeout(function(){location.reload()}, 100);
 }
 
 

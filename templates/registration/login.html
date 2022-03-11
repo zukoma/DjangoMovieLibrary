@@ -13,6 +13,7 @@
     <form method="post" class="from-group">
         {% csrf_token %}
         {{ form.as_p }}
+        <p>No account ? Pls <a href="{% url 'register' %}">register</a></p>
         <button type="submit">Log In</button>
     </form>
 </div>

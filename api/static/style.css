@@ -44,6 +44,12 @@ html{
     margin: 10px;
 }
 
+#register-form{
+    background-color: #F8F9FA;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 6px;
+    margin: 10px;
+}
 /* Form Popup stuff */
 
 #form-popup{
