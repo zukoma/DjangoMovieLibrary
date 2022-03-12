@@ -30,7 +30,8 @@
             <input type="number" id="rating" name="rating" required>
             <label for="notes">Notes</label>
             <input type="text" id="notes" name="notes" required>
-            <button onClick="addMovie()">Submit</button>
+            <input type="hidden" id="id" name="id" value="">
+            <button onClick="submit()">Submit</button>
             <button type="button" id="close" onclick="closeForm()">Close</button>
         </div>
     </div>
@@ -38,12 +39,12 @@
     <div id="content">
             {% for item in all_movies %}
                 <div class="movie">
-                    Title: <span class="div-title">{{ item.title}}</span>
-                    Year: <span class="div-year">{{ item.year}}</span>
-                    Rating: <span class="div-rating">{{ item.rating}}</span><br>
-                    Notes: <span class="div-notes">{{ item.notes}}</span><br>
-                    Added: <span class="div-added_at">{{ item.added_at}}</span><br>
-                    <button id="{{ item.id }}" onClick="editItem(this.id)">Edit</button>
+                    Title: <span class="div-title-{{ item.id }}">{{ item.title}}</span>
+                    Year: <span class="div-year-{{ item.id }}">{{ item.year}}</span>
+                    Rating: <span class="div-rating-{{ item.id }}">{{ item.rating}}</span><br>
+                    Notes: <span class="div-notes-{{ item.id }}">{{ item.notes}}</span><br>
+                    Added: <span class="div-added_at-{{ item.id }}">{{ item.added_at}}</span><br>
+                    <button id="{{ item.id }}" onClick="editForm(this.id)">Edit</button>
                     <button id="{{ item.id }}" onClick="deleteItem(this.id)">Delete</button>
                 </div>
             {% endfor %}

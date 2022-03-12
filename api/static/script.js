@@ -24,40 +24,83 @@ function deleteItem(clicked_id){
     method: 'DELETE',
     headers: {
         'X-CSRFToken': csrftoken,
-      },
-  }, 3000);
-    setTimeout(function(){location.reload()}, 10);
+      }}
+    );
+    setTimeout(function(){location.reload()}, 50);
   }
 
 
-function addMovie(clicked_id) {
+function addMovie() {
     let title = document.getElementById("title");
     let year = document.getElementById("year");
     let rating = document.getElementById("rating");
     let notes = document.getElementById("notes");
 
     fetch('/api/', {
-      method: 'POST',
-      headers: {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'X-CSRFToken': csrftoken,
+        },
+
+        body: JSON.stringify({
+            "title": title.value,
+            "year": year.value,
+            "rating": rating.value,
+            "notes": notes.value
+        }),
+    })
+}
+
+
+function editMovie(id) {
+    let title = document.getElementById("title");
+    let year = document.getElementById("year");
+    let rating = document.getElementById("rating");
+    let notes = document.getElementById("notes");
+
+    fetch('/api/' + id + '/', {
+        method: 'PUT',
+        headers: {
           'content-type': 'application/json',
           'X-CSRFToken': csrftoken,
       },
 
-      body: JSON.stringify({
+        body: JSON.stringify({
           "title": title.value,
           "year": year.value,
           "rating": rating.value,
           "notes": notes.value
       }),
-  }),
-  closeForm();
-  setTimeout(function(){location.reload()}, 100);
+  })
 }
 
 
-function editItem(clicked_id) {
+function submit(){
+    let id_value = document.getElementById("id").value
+    if (id_value == ''){
+        addMovie();
+        setTimeout(function(){location.reload()}, 100);
+        closeForm();
+    } else{
+        editMovie(id_value);
+        setTimeout(function(){location.reload()}, 100);
+        closeForm();
+    }
+}
+
+
+function editForm(clicked_id) {
+    let title = document.getElementsByClassName('div-title-'+clicked_id)[0].innerHTML;
+    let year = document.getElementsByClassName('div-year-'+clicked_id)[0].innerHTML;
+    let rating = document.getElementsByClassName('div-rating-'+clicked_id)[0].innerHTML;
+    let notes = document.getElementsByClassName('div-notes-'+clicked_id)[0].innerHTML;
+    document.getElementById("title").setAttribute('value', title);
+    document.getElementById("year").setAttribute('value', year);
+    document.getElementById("rating").setAttribute('value', rating);
+    document.getElementById("notes").setAttribute('value', notes);
+    document.getElementById("id").setAttribute('value', clicked_id);
     openForm()
-    console.log(clicked_id);
 }
 
 
@@ -68,7 +111,11 @@ function openForm() {
 
 
 function closeForm() {
-
+    document.getElementById("id").setAttribute('value', '');
+    document.getElementById("title").setAttribute('value', '');
+    document.getElementById("year").setAttribute('value', '');
+    document.getElementById("notes").setAttribute('value', '');
+    document.getElementById("rating").setAttribute('value', '');
     formPopup.classList.remove('active');
     overlay.classList.remove('active');
 }
