@@ -6,12 +6,28 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.db.models import Avg
-
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 @login_required(login_url='/login/', redirect_field_name=None)
 def index(request):
     all_movies = Movie.objects.all().order_by('-id')
     return render(request, 'index.html', {'all_movies': all_movies})
+
+
+@api_view(('GET', ))
+def stats_view_json(request):
+    all_movies = Movie.objects.max_rating()
+    avg_rating = Movie.objects.average_rating()
+    max_rating = Movie.objects.max_rating()
+    low_rating = Movie.objects.low_rating()
+
+    data = {'total_movies': len(all_movies),
+            'max_rating': max_rating,
+            'avg_rating': avg_rating,
+            'low_rating': low_rating}
+
+    return Response(data)
 
 
 def stats_view(request):

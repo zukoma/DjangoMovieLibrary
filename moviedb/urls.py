@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.views import MovieViewSet, index, register, stats_view
+from api.views import MovieViewSet, index, register, stats_view, stats_view_json
 from rest_framework import routers
 
 
@@ -11,6 +11,6 @@ urlpatterns = [
     path('', index),
     path('', include('django.contrib.auth.urls')),
     path('register/', register, name='register'),
-    path('stats/', stats_view),
+    path('stats/', stats_view_json),
     path('', include(router.urls)),
 ]
