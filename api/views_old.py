@@ -1,11 +1,9 @@
-from rest_framework import status
+
 from .models import Movie
 from .serializers import MovieSerializer
-from rest_framework.response import Response
 from rest_framework import viewsets, permissions
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view
 
 
 @login_required(login_url='/login/', redirect_field_name=None)

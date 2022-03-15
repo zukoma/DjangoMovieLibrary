@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.db.models import Avg
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
 
 @login_required(login_url='/login/', redirect_field_name=None)
 def index(request):
@@ -17,31 +17,17 @@ def index(request):
 
 @api_view(('GET', ))
 def stats_view_json(request):
-    all_movies = Movie.objects.max_rating()
+    movie_count = Movie.objects.count()
     avg_rating = Movie.objects.average_rating()
     max_rating = Movie.objects.max_rating()
     low_rating = Movie.objects.low_rating()
 
-    data = {'total_movies': len(all_movies),
+    data = {'total_movies': movie_count,
             'max_rating': max_rating,
             'avg_rating': avg_rating,
             'low_rating': low_rating}
 
     return Response(data)
-
-
-def stats_view(request):
-    all_movies = Movie.objects.all()
-    avg_rating = all_movies.aggregate(Avg('rating'))['rating__avg']
-    max_rating = all_movies.order_by('-rating').first()
-    low_rating = all_movies.order_by('rating').first()
-
-    data = {'total_movies': len(all_movies),
-            'max_rating': max_rating,
-            'avg_rating': avg_rating,
-            'low_rating': low_rating}
-
-    return render(request, 'stats.html', data)
 
 
 class MovieViewSet(viewsets.ModelViewSet):

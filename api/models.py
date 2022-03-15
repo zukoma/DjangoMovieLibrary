@@ -3,18 +3,15 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models import Avg, Max, Min
 
 
-class MovieManager(models.Manager):
+class MovieQuerySet(models.QuerySet):
     def average_rating(self):
-        return super().get_queryset().aggregate(Avg('rating'))['rating__avg']
+        return self.aggregate(Avg('rating'))['rating__avg']
 
     def max_rating(self):
-        return super().get_queryset().aggregate(Max('rating'))['rating__max']
+        return self.aggregate(Max('rating'))['rating__max']
 
     def low_rating(self):
-        return super().get_queryset().order_by('rating').first().rating
-
-    def max_rated_movie(self):
-        pass
+        return self.aggregate(Min('rating'))['rating__min']
 
 
 class Movie(models.Model):
@@ -38,4 +35,4 @@ class Movie(models.Model):
         self.title = new_title
         self.save()
 
-    objects = MovieManager()
+    objects = MovieQuerySet.as_manager()
