@@ -7,10 +7,11 @@ router = routers.DefaultRouter()
 router.register(r'api', MovieViewSet)
 router.register(r'api/<int:pk>', MovieViewSet)
 
+
 urlpatterns = [
     path('', index),
+    path('', include(router.urls)),
+    path('stats/', stats_view_json),
     path('', include('django.contrib.auth.urls')),
     path('register/', register, name='register'),
-    path('stats/', stats_view_json),
-    path('', include(router.urls)),
 ]
