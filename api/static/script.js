@@ -20,7 +20,7 @@ function getCookie(name) {
 
 
 function deleteItem(clicked_id){
-    fetch('/api/' + clicked_id, {
+    fetch('/api/movies/' + clicked_id, {
     method: 'DELETE',
     headers: {
         'X-CSRFToken': csrftoken,
@@ -36,7 +36,7 @@ function addMovie() {
     let rating = document.getElementById("rating");
     let notes = document.getElementById("notes");
 
-    fetch('/api/', {
+    fetch('/api/movies/', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
@@ -59,7 +59,7 @@ function editMovie(id) {
     let rating = document.getElementById("rating");
     let notes = document.getElementById("notes");
 
-    fetch('/api/' + id + '/', {
+    fetch('/api/movies/' + id + '/', {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',

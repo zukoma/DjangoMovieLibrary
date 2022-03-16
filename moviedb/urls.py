@@ -1,12 +1,14 @@
 from django.urls import path, include
-from api.views import MovieViewSet, index, register, stats_view_json
+from api.views import MovieViewSet, GenreViewSet, index, register, stats_view_json, UserViewSet
 from rest_framework import routers
 
 
 router = routers.DefaultRouter()
-router.register(r'api', MovieViewSet)
-router.register(r'api/<int:pk>', MovieViewSet)
-
+router.register(r'api/movies', MovieViewSet)
+router.register(r'api/movies<int:pk>', MovieViewSet)
+router.register(r'api/genres', GenreViewSet)
+router.register(r'api/genres<int:pk>', GenreViewSet)
+router.register(r'api/users', UserViewSet)
 
 urlpatterns = [
     path('', index),

@@ -18,6 +18,9 @@ class MovieQuerySet(models.QuerySet):
 class Genre(models.Model):
     genre = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.genre
+
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
@@ -35,11 +38,12 @@ class Movie(models.Model):
         ])
     notes = models.CharField(max_length=100)
     added_at = models.DateTimeField(auto_now_add=True)
-    #genre = models.ManyToManyField(Genre)
-    #added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def rename(self, new_title):
         self.title = new_title
         self.save()
 
     objects = MovieQuerySet.as_manager()
+
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

@@ -1,12 +1,24 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from api.models import Movie
+from api.models import Movie, Genre
+
+
+class GenreSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ('id', 'genre')
+
+
+class UserAddedBySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
 
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'year', 'rating', 'notes', 'added_at',]
+        fields = ['id', 'title', 'year', 'rating', 'notes', 'added_at', 'genre', 'added_by']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,3 +32,4 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+

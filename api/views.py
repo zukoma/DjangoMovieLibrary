@@ -1,5 +1,5 @@
-from .models import Movie
-from .serializers import MovieSerializer
+from .models import Movie, Genre
+from .serializers import MovieSerializer, GenreSerializer, UserAddedBySerializer
 from rest_framework import viewsets, permissions
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
 
 
 @login_required(login_url='/login/', redirect_field_name=None)
@@ -30,9 +31,20 @@ def stats_view_json(request):
     return Response(data)
 
 
+class GenreViewSet(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    permission_class = [permissions.IsAuthenticated]
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserAddedBySerializer
     permission_class = [permissions.IsAuthenticated]
 
 
