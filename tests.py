@@ -3,8 +3,15 @@ from rest_framework.test import APITestCase
 
 class TestCases(APITestCase):
     def setUp(self):
-        data = {"title": "TEST-CASE", "year": 1999, "rating": 1, "notes": "test"}
-        self.client.post('/api/movies/', data, format='json')
+        add_genre = self.client.post('/api/genres/', data={"genre": "Drama"}, format='json')
+        self.assertEqual(add_genre.status_code, 201)
+
+        add_user = self.client.post('/api/users/', data={"username": "marius"}, format='json')
+        self.assertEqual(add_user.status_code, 201)
+
+        data = {"title": "Harry Potter and Prisoner of Azkaban", "year": 2004, "rating": 10, "notes": "Good", "genre": [1], "added_by": 1}
+        response = self.client.post('/api/movies/', data=data, format='json')
+        self.assertEqual(response.status_code, 201)
 
     def test_get_one(self):
         response = self.client.get('/api/movies/1/')
@@ -16,7 +23,7 @@ class TestCases(APITestCase):
         self.assertEqual(len(response.data), 1)
 
     def test_post(self):
-        data = {"title": "TEST-CASE", "year": 1999, "rating": 1, "notes": "test"}
+        data = {"title": "TEST-CASE", "year": 1999, "rating": 1, "notes": "test", "genre": [1], "added_by": 1}
         response = self.client.post('/api/movies/', data, format='json')
         self.assertEqual(response.status_code, 201)
 
@@ -39,16 +46,16 @@ class TestCases(APITestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_put(self):
-        put_data = {"title": "TEST-CASE-EDITED", "year": 1999, "rating": 1, "notes": "test"}
+        put_data = {"title": "TEST-CASE-EDITED", "year": 1999, "rating": 1, "notes": "test", "genre": [1], "added_by": 1}
         response = self.client.put('/api/movies/1/', put_data, format='json')
         self.assertEqual(response.data['title'], "TEST-CASE-EDITED")
 
     def test_put_invalid_year(self):
-        put_data = {"title": "TEST-CASE-EDITED", "year": 9999, "rating": 1, "notes": "test"}
+        put_data = {"title": "TEST-CASE-EDITED", "year": 9999, "rating": 1, "notes": "test", "genre": [1], "added_by": 1}
         response = self.client.put('/api/movies/1/', put_data, format='json')
         self.assertEqual(response.status_code, 400)
 
     def test_put_invalid_rating(self):
-        put_data = {"title": "TEST-CASE-EDITED", "year": 2000, "rating": 99, "notes": "test"}
+        put_data = {"title": "TEST-CASE-EDITED", "year": 2000, "rating": 99, "notes": "test", "genre": [1], "added_by": 1}
         response = self.client.put('/api/movies/1/', put_data, format='json')
         self.assertEqual(response.status_code, 400)

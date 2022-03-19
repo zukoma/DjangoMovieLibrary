@@ -14,6 +14,9 @@ class MovieQuerySet(models.QuerySet):
     def low_rating(self):
         return self.aggregate(Min('rating'))['rating__min']
 
+    def user_with_most_movies(self):
+        return self.aggregate(Max('added_by'))['added_by__max']
+
 
 class Genre(models.Model):
     genre = models.CharField(max_length=50)
@@ -38,12 +41,11 @@ class Movie(models.Model):
         ])
     notes = models.CharField(max_length=100)
     added_at = models.DateTimeField(auto_now_add=True)
+    genre = models.ManyToManyField(Genre)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def rename(self, new_title):
         self.title = new_title
         self.save()
 
     objects = MovieQuerySet.as_manager()
-
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, null=True)
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

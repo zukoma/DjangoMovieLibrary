@@ -3,22 +3,24 @@ from rest_framework import serializers
 from api.models import Movie, Genre
 
 
-class GenreSerializer(serializers.HyperlinkedModelSerializer):
+class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = ('id', 'genre')
+        fields = ['id', 'genre']
 
 
 class UserAddedBySerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username')
+        fields = ['id', 'username']
 
 
-class MovieSerializer(serializers.HyperlinkedModelSerializer):
+class MovieSerializer(serializers.ModelSerializer):
+    # added_by = serializers.CharField()
     class Meta:
         model = Movie
         fields = ['id', 'title', 'year', 'rating', 'notes', 'added_at', 'genre', 'added_by']
+        #depth = 1
 
 
 class UserSerializer(serializers.ModelSerializer):
