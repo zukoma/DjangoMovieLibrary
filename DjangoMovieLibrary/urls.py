@@ -1,5 +1,5 @@
 from django.urls import path, include
-from api.views import MovieViewSet, GenreViewSet, index, register, stats_view_json, UserViewSet
+from DjangoMovieLibrary.MovieApi.views import MovieViewSet, GenreViewSet, index, register, stats_view_json, UserViewSet
 from rest_framework import routers
 
 

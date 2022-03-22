@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from api.models import Movie, Genre
+from DjangoMovieLibrary.MovieApi.models import Movie, Genre
 
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = ['id', 'genre']
+        fields = ['id', 'name']
 
 
 class UserAddedBySerializer(serializers.ModelSerializer):
