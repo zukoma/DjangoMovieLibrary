@@ -1,5 +1,5 @@
 from rest_framework.test import APITestCase
-from django_movie_library.movie.models import Genre, Movie
+from django_movie_library.movie.models import Genre, Movie, Ratings
 from django.contrib.auth.models import User
 
 
@@ -13,6 +13,9 @@ class TestEnvSetUp(APITestCase):
 
         test_movie = Movie(title="Test-Movie", year=1994, notes="Test-notes")
         test_movie.save()
+
+        test_rating = Ratings(movie=test_movie, user=test_user, rating=10)
+        test_rating.save()
 
 
 class GetTests(TestEnvSetUp):
