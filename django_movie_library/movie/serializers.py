@@ -1,13 +1,11 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django_movie_library.movie.models import Movie
-from django_movie_library.ratings.models import Ratings
 
 
 class MovieSerializer(serializers.ModelSerializer):
     rating = serializers.SerializerMethodField()
     rating_count = serializers.SerializerMethodField()
-    added_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M")
 
     class Meta:
         model = Movie
