@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_movie_library.movie',
     'django_movie_library.genre',
     'django_movie_library.ratings',
+    'django_movie_library.recommend',
 ]
 
 MIDDLEWARE = [

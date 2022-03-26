@@ -2,7 +2,7 @@ import requests
 
 data = [
     {"title": "TestMovie", "year": 2004, "rating": 10, "notes": "ok", "genre": [1], "added_by": 1},
-   # {"title": "Star Wars ", "year": 2004, "rating": 5, "notes": "Not great not terrible", "genre": [1, 5], "added_by": 11}
+    {"title": "TestMovie", "year": 2004, "rating": 10, "notes": "ok", "genre": [1], "added_by": 1},
 ]
 
 for item in data:

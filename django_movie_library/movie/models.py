@@ -27,5 +27,8 @@ class Movie(models.Model):
     def get_rating(self):
         return Ratings.objects.filter(movie=self).aggregate(Avg('rating'))['rating__avg']
 
+    def get_rating_count(self):
+        return Ratings.objects.filter(movie=self).count()
+
     def __str__(self):
         return self.title
