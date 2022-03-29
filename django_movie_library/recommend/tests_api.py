@@ -1,5 +1,5 @@
 from django_movie_library.movie.models import Movie
-from django_movie_library.movie.tests import TestEnvSetUp
+from django_movie_library.movie.tests_api import TestEnvSetUp
 
 
 # class PostTests(TestEnvSetUp):
@@ -7,4 +7,4 @@ from django_movie_library.movie.tests import TestEnvSetUp
 #         data = {"genre": "Drama"}
 #         response = self.client.post('/recommend/', data, format='json')
 #         self.assertEqual(response.status_code, 200)
-#         # self.assertEqual(len(Movie.objects.all()), 1)
+#         # self.assertEqual(Movie.objects.count(), 1)

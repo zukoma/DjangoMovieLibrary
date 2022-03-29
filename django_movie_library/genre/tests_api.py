@@ -1,5 +1,5 @@
 from django_movie_library.movie.models import Genre
-from django_movie_library.movie.tests import TestEnvSetUp
+from django_movie_library.movie.tests_api import TestEnvSetUp
 
 
 class GetTests(TestEnvSetUp):
@@ -19,14 +19,14 @@ class PostTests(TestEnvSetUp):
         data = {'name': 'Thriller'}
         response = self.client.post('/api/genres/', data, format='json')
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(Genre.objects.get(pk=2).name, "Thriller")
+        self.assertEqual(Genre.objects.get(name="Thriller").name, "Thriller")
 
 
 class DeleteTests(TestEnvSetUp):
     def test_genre_delete(self):
         response = self.client.delete('/api/genres/1/')
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(len(Genre.objects.all()), 0)
+        self.assertEqual(Genre.objects.count(), 0)
 
 
 class PutTests(TestEnvSetUp):
@@ -34,4 +34,4 @@ class PutTests(TestEnvSetUp):
         data = {'name': 'Comedy'}
         response = self.client.put('/api/genres/1/', data, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Genre.objects.get(pk=1).name, "Comedy")
+        self.assertEqual(Genre.objects.get(name="Comedy").name, "Comedy")

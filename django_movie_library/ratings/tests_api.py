@@ -1,5 +1,5 @@
 from django_movie_library.movie.models import Ratings
-from django_movie_library.movie.tests import TestEnvSetUp
+from django_movie_library.movie.tests_api import TestEnvSetUp
 
 
 class GetTests(TestEnvSetUp):
@@ -19,14 +19,14 @@ class PostTests(TestEnvSetUp):
         data = {'user': 2, 'movie': 1, 'rating': 1}
         response = self.client.post('/api/ratings/', data, format='json')
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(Ratings.objects.get(pk=2).rating, 1)
+        self.assertEqual(Ratings.objects.count(), 3)
 
 
 class DeleteTests(TestEnvSetUp):
     def test_ratings_delete(self):
         response = self.client.delete('/api/ratings/1/')
         self.assertEqual(response.status_code, 204)
-        self.assertEqual(len(Ratings.objects.all()), 1)
+        self.assertEqual(Ratings.objects.count(), 1)
 
 
 class PutTests(TestEnvSetUp):
@@ -34,4 +34,4 @@ class PutTests(TestEnvSetUp):
         data = {'user': 2, 'movie': 1, 'rating': 5}
         response = self.client.put('/api/ratings/1/', data, format='json')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(Ratings.objects.get(pk=1).rating, 5)
+        self.assertEqual(Ratings.objects.get(rating=5).rating, 5)
