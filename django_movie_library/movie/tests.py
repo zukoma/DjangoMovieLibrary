@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 
 
 class TestEnvSetUp(APITestCase):
-    def setUp(self):
-        test_genre = Genre(name="Drama")
-        test_genre.save()
+    # Two alternatives of creating object
+    # p = Person.objects.create(first_name="Bruce", last_name="Springsteen")
 
-        test_user = User(username="test")
-        test_user.save()
+    # p = Person(first_name="Bruce", last_name="Springsteen")
+    # p.save(force_insert=True)
+    def setUp(self):
+        Genre.objects.create(name="Drama")
+        user = User.objects.create(username="test")
 
         test_user2 = User(username="test2")
         test_user2.save()
@@ -20,10 +22,10 @@ class TestEnvSetUp(APITestCase):
         test_movie2 = Movie(title="Test-Movie2", year=2000, notes="Test-notes2")
         test_movie2.save()
 
-        test_rating = Ratings(movie=test_movie, user=test_user, rating=10)
+        test_rating = Ratings(movie=test_movie, user=user, rating=10)
         test_rating.save()
 
-        test_rating2 = Ratings(movie=test_movie2, user=test_user, rating=1)
+        test_rating2 = Ratings(movie=test_movie2, user=user, rating=1)
         test_rating2.save()
 
 
@@ -45,6 +47,10 @@ class PostTests(TestEnvSetUp):
         data = {"title": "POST-TEST-CASE", "year": 1999, "notes": "test", "genre": [1]}
         response = self.client.post('/api/movies/', data, format='json')
         self.assertEqual(response.status_code, 201)
+        # TODO using Movie.objects.get(pk=3) three times
+        # just save it as variable and use it later
+        # movie = Movie.objects.get(pk=3)
+        # movie.title ....
         self.assertEqual(Movie.objects.get(pk=3).title, "POST-TEST-CASE")
         self.assertEqual(Movie.objects.get(pk=3).year, 1999)
         self.assertEqual(Movie.objects.get(pk=3).notes, "test")

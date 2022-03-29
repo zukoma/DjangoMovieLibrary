@@ -1,3 +1,7 @@
+# Is it a test, if so, rename it to test_requets.py
+# because this does not run automatically.
+# If not, remove this.
+
 import requests
 
 data = [

@@ -25,9 +25,15 @@ class Movie(models.Model):
         self.save()
 
     def get_rating(self):
+        # TODO
+        # It should be possible to retrieve rating by
+        # self.rating_set
         return Ratings.objects.filter(movie=self).aggregate(Avg('rating'))['rating__avg']
 
     def get_rating_count(self):
+        # TODO
+        # It should be possible to retrieve rating by
+        # self.rating_set
         return Ratings.objects.filter(movie=self).count()
 
     def __str__(self):
