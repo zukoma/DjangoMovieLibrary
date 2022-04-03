@@ -5,13 +5,16 @@ from django.contrib.auth.models import User
 
 class TestEnvSetUp(APITestCase):
     def setUp(self):
-        Genre.objects.create(name="Drama")
+        genre = Genre.objects.create(name="Drama")
 
         user = User.objects.create(username="test")
         user2 = User.objects.create(username="test2")
 
         movie = Movie.objects.create(title="Test-Movie", year=1994, notes="Test-notes")
+        movie.genre.add(genre)
+
         movie2 = Movie.objects.create(title="Test-Movie2", year=2000, notes="Test-notes2")
+        movie2.genre.add(genre)
 
         Ratings.objects.create(movie=movie, user=user, rating=10)
         Ratings.objects.create(movie=movie2, user=user2, rating=1)
@@ -23,6 +26,7 @@ class GetTests(TestEnvSetUp):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['title'], "Test-Movie")
         self.assertEqual(response.data['year'], 1994)
+        self.assertEqual(response.data['genre'], [1])
 
     def test_movie_get_all(self):
         response = self.client.get('/api/movies/')
@@ -39,6 +43,7 @@ class PostTests(TestEnvSetUp):
         self.assertEqual(posted_object.title, "POST-TEST-CASE")
         self.assertEqual(posted_object.year, 1999)
         self.assertEqual(posted_object.notes, "test")
+        self.assertEqual(posted_object.genre.values()[0]['name'], "Drama")
 
     def test_movie_post_invalid_genre_value(self):
         data = {"title": "TEST-CASE", "year": 1999, "notes": "test", "genre": [2]}
@@ -77,6 +82,7 @@ class PutTests(TestEnvSetUp):
         response = self.client.put('/api/movies/1/', put_data, format='json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Movie.objects.get(year=1994).year, 1994)
+
 
     def test_put_invalid_genre(self):
         put_data = {"title": "TEST-CASE-EDITED", "year": 2000, "notes": "test", "genre": [3]}

@@ -1,7 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django_movie_library.recommend.serializers import RecommendationsResponseSerializer, ReommendationsModelSerializer
+from django_movie_library.recommend.serializers import ViewReadSerializer
+from django_movie_library.movie.serializers import RecommendationsResponseSerializer
 from django_movie_library.movie.models import Movie, Genre
 from .models import Recommendations
 from rest_framework import viewsets, permissions
@@ -11,7 +12,7 @@ import random
 
 class RecommendationsViewSet(viewsets.ModelViewSet):
     queryset = Recommendations.objects.all()
-    serializer_class = ReommendationsModelSerializer
+    serializer_class = ViewReadSerializer
     permission_class = [permissions.IsAuthenticated]
 
 

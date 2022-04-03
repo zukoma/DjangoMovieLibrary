@@ -36,3 +36,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
+class RecommendationsResponseSerializer(MovieSerializer):
+    class Meta:
+        model = Movie
+        fields = ['title', 'year', 'genre', 'rating', 'rating_count']
+        depth = 1
