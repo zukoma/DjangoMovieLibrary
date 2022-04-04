@@ -1,5 +1,6 @@
 from rest_framework.test import APITestCase
 from django_movie_library.movie.models import Genre, Movie, Ratings
+from django_movie_library.recommend.models import Recommendations
 from django.contrib.auth.models import User
 
 
@@ -18,6 +19,8 @@ class TestEnvSetUp(APITestCase):
 
         Ratings.objects.create(movie=movie, user=user, rating=10)
         Ratings.objects.create(movie=movie2, user=user2, rating=1)
+
+        Recommendations.objects.create(user=user, recommended_movie=movie)
 
 
 class GetTests(TestEnvSetUp):
